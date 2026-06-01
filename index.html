@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ali Khail Poultry - Complete Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="container page active" id="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <h2 data-i18n="login-title">Login to Ali Khail Poultry System</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label data-i18n="select-user">Select User</label>
+                        <div class="user-options">
+                            <div class="user-option" data-user="jawad">
+                                <img src="https://ui-avatars.com/api/?name=Jawad&background=4a6fa5&color=fff&size=100" alt="Jawad">
+                                <h4>Jawad</h4>
+                            </div>
+                            <div class="user-option" data-user="fawad">
+                                <img src="https://ui-avatars.com/api/?name=Fawad&background=4a6fa5&color=fff&size=100" alt="Fawad">
+                                <h4>Fawad</h4>
+                            </div>
+                            <div class="user-option" data-user="shal-dada">
+                                <img src="https://ui-avatars.com/api/?name=Shal+Dada&background=4a6fa5&color=fff&size=100" alt="Shal Dada">
+                                <h4>Shal Dada</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" data-i18n="password">Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="loginPassword" placeholder="Enter password" required minlength="6">
+                            <button type="button" class="password-toggle-btn" id="passwordToggleBtn">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;" data-i18n="login-btn">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Application -->
+    <div id="app" style="display: none;">
+        <!-- Top Header with Top Action Bar -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-drumstick-bite"></i>
+                        <h1 id="site-title">Ali Khail Poultry</h1>
+                    </div>
+                    <div class="header-right">
+                        <!-- Language Switcher -->
+                        <div class="language-switcher">
+                            <button class="lang-btn active" data-lang="en">
+                                <img src="https://flagcdn.com/w20/us.png" alt="English" width="20" height="15">
+                                <span>English</span>
+                            </button>
+                            <button class="lang-btn" data-lang="ur">
+                                <img src="https://flagcdn.com/w20/pk.png" alt="اردو" width="20" height="15">
+                                <span>اردو</span>
+                            </button>
+                        </div>
+                        <div class="header-user" id="header-user" style="display:none; align-items:center; gap:10px;">
+                            <img id="header-user-img" src="" alt="User" style="width:36px; height:36px; border-radius:50%; object-fit:cover;">
+                            <span id="header-user-name-top" style="font-weight:600; color:white;"></span>
+                            <button id="header-logout-btn" class="btn btn-danger btn-sm" style="margin-left:8px;">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Top Action Bar (like DG Kata) -->
+            <div class="top-action-bar" id="top-action-bar" style="display: none;">
+                <div class="container">
+                    <div class="top-action-tabs">
+                        <button class="top-action-tab" data-section="clients">
+                            <i class="fas fa-users"></i>
+                            <span>Clients</span>
+                        </button>
+                        <button class="top-action-tab" data-section="cars">
+                            <i class="fas fa-car"></i>
+                            <span>Cars</span>
+                        </button>
+                        <button class="top-action-tab" data-section="workers">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Workers</span>
+                        </button>
+                        <button class="top-action-tab" data-section="waste">
+                            <i class="fas fa-recycle"></i>
+                            <span>Waste</span>
+                        </button>
+                        <button class="top-action-tab" data-section="brokers">
+                            <i class="fas fa-handshake"></i>
+                            <span>Brokers</span>
+                        </button>
+                        <button class="top-action-tab" data-section="reminders">
+                            <i class="fas fa-bell"></i>
+                            <span>Reminders</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div class="container page active" id="main-dashboard-page">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3 id="total-orders">0</h3>
+                        <p data-i18n="total-orders">Total Orders</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="total-revenue">PKR 0</h3>
+                        <p data-i18n="total-revenue">Total Revenue</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="total-chicken">0 kg</h3>
+                        <p data-i18n="total-chicken">Total Chicken Sold</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="total-clients">0</h3>
+                        <p data-i18n="total-clients">Total Clients</p>
+                    </div>
+                </div>
+                
+                <div class="dashboard">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-plus-circle"></i> <span data-i18n="add-order">Add New Order</span></h2>
+                        </div>
+                        <form id="orderForm">
+                            <div class="form-group">
+                                <label for="orderDate" data-i18n="order-date">Order Date</label>
+                                <input type="date" id="orderDate" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="client-select-header">
+                                    <label for="clientSelect" data-i18n="select-client">Select Client</label>
+                                    <button type="button" class="btn btn-info btn-sm" id="quick-add-client-btn">
+                                        <i class="fas fa-plus"></i> <span data-i18n="quick-add-client">Quick Add New Client</span>
+                                    </button>
+                                </div>
+                                <select id="clientSelect" required>
+                                    <option value="" data-i18n="select-client">Select a client</option>
+                                </select>
+                            </div>
+                            <div class="client-info-group">
+                                <div class="form-group">
+                                    <label for="customerName" data-i18n="customer-name">Customer Name</label>
+                                    <input type="text" id="customerName" placeholder="Customer name will auto-fill" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chickenType" data-i18n="chicken-type">Chicken Type</label>
+                                <select id="chickenType" required>
+                                    <option value="" data-i18n="select-type">Select chicken type</option>
+                                    <option value="broiler">Broiler</option>
+                                    <option value="country">Country Chicken</option>
+                                    <option value="kadaknath">Kadaknath</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="price-quantity-group">
+                                <div class="form-group">
+                                    <label for="quantity" data-i18n="quantity">Quantity (kg)</label>
+                                    <input type="number" id="quantity" placeholder="Enter quantity in kg" min="0.5" step="0.5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricePerKg" data-i18n="price-per-kg">Price per kg (PKR)</label>
+                                    <input type="number" id="pricePerKg" placeholder="Enter price per kg" min="1" step="0.5" required>
+                                </div>
+                            </div>
+                            
+                            <div class="total-price">
+                                <h3 data-i18n="total-order-price">Total Order Price</h3>
+                                <div class="amount" id="totalPrice">PKR 0.00</div>
+                            </div>
+                            
+                            <div class="form-buttons">
+                                <button type="submit" class="btn btn-secondary" data-i18n="add-order-btn">Add Order</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- All Orders Page -->
+            <div class="container page" id="all-orders-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list"></i> <span data-i18n="all-orders">All Orders</span></h2>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">Complete</th>
+                                    <th data-i18n="date">Date</th>
+                                    <th data-i18n="customer">Customer</th>
+                                    <th data-i18n="phone">Phone</th>
+                                    <th data-i18n="type">Type</th>
+                                    <th data-i18n="quantity">Qty (kg)</th>
+                                    <th data-i18n="rate">Rate (PKR/kg)</th>
+                                    <th data-i18n="price">Total (PKR)</th>
+                                    <th data-i18n="taken-by">Taken By</th>
+                                    <th data-i18n="status">Status</th>
+                                    <th data-i18n="actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allOrdersTableBody">
+                                <!-- All orders will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Records Page -->
+            <div class="container page" id="order-records-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-history"></i> <span data-i18n="order-records">Order Records</span></h2>
+                        <div class="records-controls">
+                            <div class="date-filter">
+                                <label data-i18n="filter-by-date">Filter by Date:</label>
+                                <input type="date" id="records-date-filter">
+                            </div>
+                            <button class="btn btn-info btn-sm" id="reset-records-filter">
+                                <i class="fas fa-refresh"></i> <span data-i18n="reset-filter">Reset Filter</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="records-summary">
+                        <div class="summary-card">
+                            <i class="fas fa-list"></i>
+                            <div>
+                                <h3 id="filtered-orders-count">0</h3>
+                                <p data-i18n="orders">Orders</p>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <i class="fas fa-weight"></i>
+                            <div>
+                                <h3 id="filtered-quantity-total">0</h3>
+                                <p data-i18n="total-kg">Total KG</p>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <i class="fas fa-money-bill"></i>
+                            <div>
+                                <h3 id="filtered-revenue-total">PKR 0</h3>
+                                <p data-i18n="total-revenue">Total Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="date">Date</th>
+                                    <th data-i18n="time">Time</th>
+                                    <th data-i18n="customer">Customer</th>
+                                    <th data-i18n="phone">Phone</th>
+                                    <th data-i18n="type">Type</th>
+                                    <th data-i18n="quantity">Qty (kg)</th>
+                                    <th data-i18n="rate">Rate</th>
+                                    <th data-i18n="price">Total</th>
+                                    <th data-i18n="taken-by">Taken By</th>
+                                    <th data-i18n="status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderRecordsTableBody">
+                                <!-- Order records will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="records-actions">
+                        <button class="btn btn-secondary" id="export-records-btn">
+                            <i class="fas fa-download"></i> <span data-i18n="export-records">Export Records</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Client Management Page -->
+            <div class="container page" id="client-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-users"></i> <span data-i18n="client-management">Client Management</span></h2>
+                        <button class="btn btn-secondary" id="add-client-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-client">Add New Client</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Search Section -->
+                    <div class="search-section">
+                        <div class="search-container">
+                            <div class="search-input-group">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="clientSearchName" placeholder="Search by name..." data-i18n-placeholder="search-by-name">
+                            </div>
+                            <div class="search-input-group">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="clientSearchLocation" placeholder="Search by location..." data-i18n-placeholder="search-by-location">
+                            </div>
+                            <button class="btn btn-light btn-sm" id="clearClientSearch">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th data-i18n="client-name">Client Name</th>
+                                    <th data-i18n="phone">Phone</th>
+                                    <th data-i18n="address">Address</th>
+                                    <th data-i18n="total-orders">Total Orders</th>
+                                    <th>Total Due (PKR)</th>
+                                    <th>Paid (PKR)</th>
+                                    <th>Remaining (PKR)</th>
+                                    <th data-i18n="actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientsTableBody">
+                                <!-- Clients will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Shop Management Page -->
+            <div class="container page" id="shop-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-store"></i> <span data-i18n="shop-management">Shop Management</span></h2>
+                        <button class="btn btn-secondary" id="add-shop-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-shop">Add New Shop</span>
+                        </button>
+                    </div>
+                    <div id="shopsGrid" class="shops-grid">
+                        <!-- Shops cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Car Management Page -->
+            <div class="container page" id="car-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-car"></i> <span data-i18n="car-management">Car Management</span></h2>
+                        <button class="btn btn-secondary" id="add-car-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-car">Add New Car</span>
+                        </button>
+                    </div>
+                    
+                    <div class="car-details">
+                        <div class="car-details-grid" id="carsGrid">
+                            <!-- Car cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Worker Management Page -->
+            <div class="container page" id="worker-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-user-tie"></i> <span data-i18n="worker-management">Worker Management</span></h2>
+                        <button class="btn btn-secondary" id="add-worker-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-worker">Add New Worker</span>
+                        </button>
+                    </div>
+                    
+                    <div class="worker-details">
+                        <div class="worker-details-grid" id="workersGrid">
+                            <!-- Worker cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Waste Management Page -->
+            <div class="container page" id="waste-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-recycle"></i> <span data-i18n="waste-management">Waste Management</span></h2>
+                        <button class="btn btn-secondary" id="add-waste-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-waste">Add Waste Sale</span>
+                        </button>
+                    </div>
+                    
+                    <div class="waste-details">
+                        <div class="waste-details-grid" id="wasteGrid">
+                            <!-- Waste cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Broker Management Page -->
+            <div class="container page" id="broker-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-handshake"></i> <span data-i18n="broker-management">Broker Management</span></h2>
+                        <button class="btn btn-secondary" id="add-broker-btn">
+                            <i class="fas fa-plus"></i> <span data-i18n="add-broker">Add New Broker</span>
+                        </button>
+                    </div>
+                    
+                    <div class="broker-details">
+                        <div class="broker-details-grid" id="brokersGrid">
+                            <!-- Broker cards will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reminder Management Page -->
+            <div class="container page" id="reminder-management-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bell"></i> <span data-i18n="reminders">Reminders & Bill Management</span></h2>
+                        <div class="header-actions">
+                            <button class="btn btn-secondary" id="add-reminder-btn">
+                                <i class="fas fa-plus"></i> <span data-i18n="add-reminder">Add Reminder</span>
+                            </button>
+                            <button class="btn btn-success" id="schedule-bill-btn">
+                                <i class="fas fa-calendar-plus"></i> <span data-i18n="schedule-bill">Schedule Bill</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="reminder-bill-container">
+                        <!-- Scheduled Bills -->
+                        <div class="bill-section">
+                            <h3><i class="fas fa-file-invoice"></i> <span data-i18n="scheduled-bills">Scheduled Bills</span></h3>
+                            <div class="scheduled-bills-list" id="scheduled-bills-list">
+                                <!-- Scheduled bills will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Bill Actions -->
+                        <div class="quick-actions-section">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                            <div class="quick-actions">
+                                <div class="quick-action-card">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <h4>Send Bill Now</h4>
+                                    <div class="form-group">
+                                        <select id="immediateBillClient" style="margin: 10px 0;">
+                                            <option value="">Select Client</option>
+                                        </select>
+                                        <textarea id="immediateBillNotes" placeholder="Optional notes..." rows="2" style="width: 100%; margin: 5px 0; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                                        <button class="btn btn-success btn-sm" id="send-bill-btn" style="width: 100%;">
+                                            <i class="fas fa-paper-plane"></i> <span data-i18n="send-now">Send Now</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Client Detail Page -->
+            <div class="container page" id="client-detail-page">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-user"></i> <span id="client-detail-name">Client Details</span></h2>
+                    </div>
+                    
+                    <div class="client-detail-container">
+                        <!-- Client Basic Info -->
+                        <div class="client-basic-info">
+                            <div class="info-row">
+                                <div class="info-label">Name:</div>
+                                <div class="info-value" id="detail-client-name">-</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Phone:</div>
+                                <div class="info-value" id="detail-client-phone">-</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Address:</div>
+                                <div class="info-value" id="detail-client-address">-</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Member Since:</div>
+                                <div class="info-value" id="detail-client-since">-</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Client Financial Summary -->
+                        <div class="financial-summary-grid">
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Total Orders</div>
+                                    <div class="financial-value" id="detail-total-orders">0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-weight"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Total Chicken (kg)</div>
+                                    <div class="financial-value" id="detail-total-chicken">0 kg</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Total Value</div>
+                                    <div class="financial-value" id="detail-total-value">PKR 0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Total Due</div>
+                                    <div class="financial-value" id="detail-total-due">PKR 0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Total Paid</div>
+                                    <div class="financial-value" id="detail-total-paid">PKR 0</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-card">
+                                <div class="financial-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                                <div class="financial-content">
+                                    <div class="financial-title">Remaining</div>
+                                    <div class="financial-value" id="detail-remaining">PKR 0</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Client Orders Table -->
+                        <div class="client-orders-section">
+                            <h3><i class="fas fa-list"></i> Order History</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Quantity (kg)</th>
+                                            <th>Rate (PKR/kg)</th>
+                                            <th>Total (PKR)</th>
+                                            <th>Taken By</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="client-orders-table-body">
+                                        <!-- Client orders will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Client Payment History -->
+                        <div class="payment-history-section">
+                            <div class="section-header">
+                                <h3><i class="fas fa-history"></i> Payment History</h3>
+                                <button class="btn btn-sm btn-secondary" id="add-payment-from-detail">
+                                    <i class="fas fa-plus"></i> Add Payment
+                                </button>
+                            </div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Amount (PKR)</th>
+                                            <th>Method</th>
+                                            <th>Reference</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="client-payment-history-table-body">
+                                        <!-- Payment history will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation (like DG Kata) -->
+        <div class="bottom-nav" id="bottom-nav">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span data-i18n="dashboard">Dashboard</span>
+                </button>
+                <button class="nav-tab" data-section="orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span data-i18n="all-orders">Orders</span>
+                </button>
+                <button class="nav-tab" data-section="records">
+                    <i class="fas fa-history"></i>
+                    <span data-i18n="order-records">Records</span>
+                </button>
+                <button class="nav-tab" data-section="clients">
+                    <i class="fas fa-users"></i>
+                    <span data-i18n="client-management">Clients</span>
+                </button>
+                <button class="nav-tab" data-section="shops">
+                    <i class="fas fa-store"></i>
+                    <span data-i18n="shop-management">Shops</span>
+                </button>
+                <div class="nav-dropdown">
+                    <button class="nav-tab more-btn" id="more-dropdown-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <span data-i18n="more">More</span>
+                    </button>
+                    <div class="dropdown-content" id="more-dropdown-content">
+                        <a href="#" class="nav-link" data-section="cars">
+                            <i class="fas fa-car"></i>
+                            <span data-i18n="car-management">Cars</span>
+                        </a>
+                        <a href="#" class="nav-link" data-section="workers">
+                            <i class="fas fa-user-tie"></i>
+                            <span data-i18n="worker-management">Workers</span>
+                        </a>
+                        <a href="#" class="nav-link" data-section="waste">
+                            <i class="fas fa-recycle"></i>
+                            <span data-i18n="waste-management">Waste</span>
+                        </a>
+                        <a href="#" class="nav-link" data-section="brokers">
+                            <i class="fas fa-handshake"></i>
+                            <span data-i18n="broker-management">Brokers</span>
+                        </a>
+                        <a href="#" class="nav-link" data-section="reminders">
+                            <i class="fas fa-bell"></i>
+                            <span data-i18n="reminders">Reminders</span>
+                        </a>
+                        <button class="nav-link" id="export-bottom-btn">
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="export-data">Export Data</span>
+                        </button>
+                        <button class="nav-link" id="logout-bottom-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span data-i18n="logout">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- All Modals -->
+        
+        <!-- Client Modal -->
+        <div id="client-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title" data-i18n="add-client">Add New Client</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="clientForm">
+                    <input type="hidden" id="clientId">
+                    <div class="form-group">
+                        <label for="clientName" data-i18n="client-name">Client Name</label>
+                        <input type="text" id="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone" data-i18n="phone">Phone Number</label>
+                        <input type="tel" id="clientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress" data-i18n="address">Address</label>
+                        <input type="text" id="clientAddress" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-client-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-client">Save Client</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Quick Add Client Modal -->
+        <div id="quick-client-modal" class="modal">
+            <div class="modal-content quick-client-modal">
+                <div class="modal-header">
+                    <h3 data-i18n="quick-add-client">Quick Add New Client</h3>
+                    <span class="close quick-client-close">&times;</span>
+                </div>
+                <form id="quickClientForm" class="quick-client-form">
+                    <div class="form-group">
+                        <label for="quickClientName" data-i18n="client-name">Client Name</label>
+                        <input type="text" id="quickClientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickClientPhone" data-i18n="phone">Phone Number</label>
+                        <input type="tel" id="quickClientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quickClientAddress" data-i18n="address">Address</label>
+                        <input type="text" id="quickClientAddress" required>
+                    </div>
+                    <div class="quick-client-buttons">
+                        <button type="button" class="btn btn-danger" id="cancel-quick-client-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-and-select">Save & Select</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Payment Modal -->
+        <div id="payment-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="payment-modal-title">Record Payment</h3>
+                    <span class="close payment-close">&times;</span>
+                </div>
+                <form id="paymentForm">
+                    <input type="hidden" id="paymentClientId">
+                    <div class="form-group">
+                        <label for="paymentDate">Payment Date</label>
+                        <input type="date" id="paymentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentAmount">Amount (PKR)</label>
+                        <input type="number" id="paymentAmount" min="1" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="online">Online Payment</option>
+                            <option value="card">Card</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentReference">Reference/Note (Optional)</label>
+                        <input type="text" id="paymentReference" placeholder="Cheque number, transaction ID, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Due: <span id="current-due-amount">PKR 0.00</span></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-payment-btn">Cancel</button>
+                        <button type="submit" class="btn btn-success">Record Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Payment History Modal -->
+        <div id="payment-history-modal" class="modal">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h3 id="payment-history-title">Payment History</h3>
+                    <span class="close payment-history-close">&times;</span>
+                </div>
+                <div class="payment-history-content">
+                    <div class="client-info-section" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+                        <h4 id="history-client-name">Client Name</h4>
+                        <p id="history-client-details">Phone: - | Address: -</p>
+                        <div class="financial-summary" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                            <div style="text-align: center;">
+                                <strong>Total Due</strong>
+                                <div id="history-total-due">PKR 0.00</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <strong>Total Paid</strong>
+                                <div id="history-total-paid">PKR 0.00</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <strong>Remaining</strong>
+                                <div id="history-remaining">PKR 0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Reference</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentHistoryTableBody">
+                                <!-- Payment history will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Car Modal -->
+        <div id="car-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="car-modal-title" data-i18n="add-car">Add New Car</h3>
+                    <span class="close car-close">&times;</span>
+                </div>
+                <form id="carForm">
+                    <input type="hidden" id="carId">
+                    <div class="form-group">
+                        <label for="carNumber" data-i18n="car-number">Car Number</label>
+                        <input type="text" id="carNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="carDriver" data-i18n="car-driver">Driver Name</label>
+                        <input type="text" id="carDriver" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="carCapacity" data-i18n="car-capacity">Capacity (kg)</label>
+                        <input type="number" id="carCapacity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="carStatus" data-i18n="car-status">Status</label>
+                        <select id="carStatus" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="maintenance">Under Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-car-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-car">Save Car</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Worker Modal -->
+        <div id="worker-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="worker-modal-title" data-i18n="add-worker">Add New Worker</h3>
+                    <span class="close worker-close">&times;</span>
+                </div>
+                <form id="workerForm">
+                    <input type="hidden" id="workerId">
+                    <div class="form-group">
+                        <label for="workerName" data-i18n="worker-name">Worker Name</label>
+                        <input type="text" id="workerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="workerPhone" data-i18n="phone">Phone Number</label>
+                        <input type="tel" id="workerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="workerRole" data-i18n="worker-role">Role</label>
+                        <input type="text" id="workerRole" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="workerSalary" data-i18n="worker-salary">Salary (PKR)</label>
+                        <input type="number" id="workerSalary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="workerAdvance">Advance Taken (PKR)</label>
+                        <input type="number" id="workerAdvance" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="workerRemaining">Remaining Salary (PKR)</label>
+                        <input type="text" id="workerRemaining" readonly value="PKR 0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="workerStatus" data-i18n="worker-status">Status</label>
+                        <select id="workerStatus" required>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="leave">On Leave</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-worker-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-worker">Save Worker</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Shop Modal -->
+        <div id="shop-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="shop-modal-title">Add New Shop</h3>
+                    <span class="close shop-close">&times;</span>
+                </div>
+                <form id="shopForm">
+                    <input type="hidden" id="shopId">
+                    <div class="form-group">
+                        <label for="shopName">Shop Name</label>
+                        <input type="text" id="shopName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopLocation">Location</label>
+                        <input type="text" id="shopLocation" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-shop-btn">Cancel</button>
+                        <button type="submit" class="btn btn-secondary">Save Shop</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Remaining Chicken Modal -->
+        <div id="remaining-chicken-modal" class="modal">
+            <div class="modal-content" style="max-width:500px;">
+                <div class="modal-header">
+                    <h3 data-i18n="record-remaining">Record Remaining Chicken</h3>
+                    <span class="close remaining-chicken-close">&times;</span>
+                </div>
+                <form id="remainingChickenForm">
+                    <input type="hidden" id="remainingShopId">
+                    <div class="form-group">
+                        <label for="remainingDate" data-i18n="remaining-date">Date</label>
+                        <input type="date" id="remainingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remainingQuantity" data-i18n="remaining-quantity">Remaining/Dead Quantity (kg)</label>
+                        <input type="number" id="remainingQuantity" min="0" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remainingNotes" data-i18n="remaining-notes">Notes (Optional)</label>
+                        <textarea id="remainingNotes" rows="3" placeholder="e.g., Dead chickens, unsold stock..."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-remaining-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-remaining">Save Record</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Sale Modal -->
+        <div id="add-sale-modal" class="modal">
+            <div class="modal-content" style="max-width:500px;">
+                <div class="modal-header">
+                    <h3 id="add-sale-title">Record Sale to Shop</h3>
+                    <span class="close sale-close">&times;</span>
+                </div>
+                <form id="saleForm">
+                    <div class="form-group">
+                        <label for="saleDate">Sale Date</label>
+                        <input type="date" id="saleDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="saleShopSelect">Shop</label>
+                        <select id="saleShopSelect" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="saleQuantity">Quantity (kg)</label>
+                        <input type="number" id="saleQuantity" min="0.5" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salePricePerKg">Price per kg (PKR)</label>
+                        <input type="number" id="salePricePerKg" min="1" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="saleCostPerKg">Cost per kg (PKR)</label>
+                        <input type="number" id="saleCostPerKg" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Value: <span id="saleTotalValue">PKR 0.00</span></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-sale-btn">Cancel</button>
+                        <button type="submit" class="btn btn-secondary">Record Sale</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Shop Payment Modal -->
+        <div id="shop-payment-modal" class="modal">
+            <div class="modal-content" style="max-width:500px;">
+                <div class="modal-header">
+                    <h3 id="shop-payment-title">Record Shop Payment</h3>
+                    <span class="close shop-payment-close">&times;</span>
+                </div>
+                <form id="shopPaymentForm">
+                    <input type="hidden" id="paymentShopId">
+                    <div class="form-group">
+                        <label for="shopPaymentDate">Payment Date</label>
+                        <input type="date" id="shopPaymentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopPaymentAmount">Amount (PKR)</label>
+                        <input type="number" id="shopPaymentAmount" min="0.01" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shopPaymentMethod">Method</label>
+                        <select id="shopPaymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-shop-payment-btn">Cancel</button>
+                        <button type="submit" class="btn btn-secondary">Save Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Shop Day Summary Modal -->
+        <div id="shop-day-summary-modal" class="modal">
+            <div class="modal-content" style="max-width:600px;">
+                <div class="modal-header">
+                    <h3 id="shop-day-summary-title">Shop Day Summary</h3>
+                    <span class="close shop-day-summary-close">&times;</span>
+                </div>
+                <div class="modal-body" style="padding:15px;">
+                    <div class="form-group">
+                        <strong id="sds-shop-name">Shop Name</strong>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="sds-date" />
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:10px;">
+                        <div>
+                            <div><strong>Total Sold (kg)</strong></div>
+                            <div id="sds-total-kg">0</div>
+                        </div>
+                        <div>
+                            <div><strong>Total Revenue (PKR)</strong></div>
+                            <div id="sds-revenue">PKR 0.00</div>
+                        </div>
+                        <div>
+                            <div><strong>Total Cost (PKR)</strong></div>
+                            <div id="sds-cost">PKR 0.00</div>
+                        </div>
+                        <div>
+                            <div><strong>Gross Profit (PKR)</strong></div>
+                            <div id="sds-gross-profit">PKR 0.00</div>
+                        </div>
+                        <div>
+                            <div><strong>Payments Collected (PKR)</strong></div>
+                            <div id="sds-payments">PKR 0.00</div>
+                        </div>
+                        <div>
+                            <div><strong>Remaining Due (PKR)</strong></div>
+                            <div id="sds-remaining">PKR 0.00</div>
+                        </div>
+                        <div>
+                            <div><strong>Net Cash (Payments - Cost)</strong></div>
+                            <div id="sds-net-cash">PKR 0.00</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;" id="sds-indicator"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="sds-close-btn">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Bill Modal -->
+        <div id="shop-bill-modal" class="modal">
+            <div class="modal-content" style="max-width:800px;">
+                <div class="modal-header">
+                    <h3 id="shop-bill-title">Shop Bill</h3>
+                    <span class="close shop-bill-close">&times;</span>
+                </div>
+                <div class="modal-body" id="shop-bill-body" style="padding:15px;">
+                    <!-- Bill content inserted dynamically -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="shop-bill-close-btn">Close</button>
+                    <button class="btn btn-success" id="shop-bill-print-btn">Print / Export</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shop Bill Filter Modal -->
+        <div id="shop-bill-filter-modal" class="modal">
+            <div class="modal-content" style="max-width:500px;">
+                <div class="modal-header">
+                    <h3>Generate Bill for Shop</h3>
+                    <span class="close shop-bill-filter-close">&times;</span>
+                </div>
+                <form id="billFilterForm">
+                    <input type="hidden" id="billFilterShopId">
+                    <div class="bill-filter-section">
+                        <div class="filter-group">
+                            <label for="billFromDate">From Date</label>
+                            <input type="date" id="billFromDate" required>
+                        </div>
+                        <div class="filter-group">
+                            <label for="billToDate">To Date</label>
+                            <input type="date" id="billToDate" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-bill-filter-btn">Cancel</button>
+                        <button type="submit" class="btn btn-secondary">Generate Bill</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Broker Modal -->
+        <div id="broker-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="broker-modal-title">Add New Broker</h3>
+                    <span class="close broker-close">&times;</span>
+                </div>
+                <form id="brokerForm">
+                    <input type="hidden" id="brokerId">
+                    <div class="form-group">
+                        <label for="brokerName">Broker Name</label>
+                        <input type="text" id="brokerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerPhone">Phone Number</label>
+                        <input type="tel" id="brokerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerAddress">Address</label>
+                        <input type="text" id="brokerAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerTotal">Total Amount (PKR)</label>
+                        <input type="number" id="brokerTotal" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerPaid">Paid Amount (PKR)</label>
+                        <input type="number" id="brokerPaid" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerRemaining">Remaining (PKR)</label>
+                        <input type="text" id="brokerRemaining" readonly value="PKR 0.00">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-broker-btn">Cancel</button>
+                        <button type="submit" class="btn btn-secondary">Save Broker</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Waste Modal -->
+        <div id="waste-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="waste-modal-title" data-i18n="add-waste">Add Waste Sale</h3>
+                    <span class="close waste-close">&times;</span>
+                </div>
+                <form id="wasteForm">
+                    <input type="hidden" id="wasteId">
+                    <div class="form-group">
+                        <label for="wasteDate" data-i18n="waste-date">Sale Date</label>
+                        <input type="date" id="wasteDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wasteType" data-i18n="waste-type">Waste Type</label>
+                        <select id="wasteType" required>
+                            <option value="feathers">Feathers</option>
+                            <option value="heads">Heads</option>
+                            <option value="feet">Feet</option>
+                            <option value="organs">Organs</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wasteQuantity" data-i18n="waste-quantity">Quantity (kg)</label>
+                        <input type="number" id="wasteQuantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wastePrice" data-i18n="waste-price">Price (PKR)</label>
+                        <input type="number" id="wastePrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wasteBuyer" data-i18n="waste-buyer">Buyer Name</label>
+                        <input type="text" id="wasteBuyer" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-waste-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-waste">Save Waste Sale</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Broker Payment Modal -->
+        <div id="broker-payment-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="broker-payment-modal-title">Record Payment to Broker</h3>
+                    <span class="close broker-payment-close">&times;</span>
+                </div>
+                <form id="brokerPaymentForm">
+                    <input type="hidden" id="brokerPaymentId">
+                    <div class="form-group">
+                        <label for="brokerPaymentDate">Payment Date</label>
+                        <input type="date" id="brokerPaymentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerPaymentAmount">Amount (PKR)</label>
+                        <input type="number" id="brokerPaymentAmount" min="1" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerPaymentMethod">Payment Method</label>
+                        <select id="brokerPaymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="online">Online Payment</option>
+                            <option value="card">Card</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="brokerPaymentReference">Reference/Note (Optional)</label>
+                        <input type="text" id="brokerPaymentReference" placeholder="Cheque number, transaction ID, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Due: <span id="broker-current-due-amount">PKR 0.00</span></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-broker-payment-btn">Cancel</button>
+                        <button type="submit" class="btn btn-success">Record Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Broker Payment History Modal -->
+        <div id="broker-payment-history-modal" class="modal">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h3 id="broker-payment-history-title">Payment History - Broker</h3>
+                    <span class="close broker-payment-history-close">&times;</span>
+                </div>
+                <div class="payment-history-content">
+                    <div class="client-info-section" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px;">
+                        <h4 id="broker-history-name">Broker Name</h4>
+                        <p id="broker-history-details">Phone: - | Address: -</p>
+                        <div class="financial-summary" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                            <div style="text-align: center;">
+                                <strong>Total Due</strong>
+                                <div id="broker-history-total-due">PKR 0.00</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <strong>Total Paid</strong>
+                                <div id="broker-history-total-paid">PKR 0.00</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <strong>Remaining</strong>
+                                <div id="broker-history-remaining">PKR 0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Reference</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="brokerPaymentHistoryTableBody">
+                                <!-- Broker payment history will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reminder Modal -->
+        <div id="reminder-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="reminder-modal-title" data-i18n="add-reminder">Add Reminder</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="reminderForm">
+                    <input type="hidden" id="reminderId">
+                    <div class="form-group">
+                        <label for="reminderTitle" data-i18n="reminder-title">Reminder Title</label>
+                        <input type="text" id="reminderTitle" placeholder="E.g., Follow up with client" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderDescription" data-i18n="reminder-description">Description (Optional)</label>
+                        <textarea id="reminderDescription" placeholder="Add details..." rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reminderDate" data-i18n="reminder-date">Date</label>
+                            <input type="date" id="reminderDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reminderTime" data-i18n="reminder-time">Time</label>
+                            <input type="time" id="reminderTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderRepeat" data-i18n="repeat">Repeat</label>
+                        <select id="reminderRepeat" required>
+                            <option value="once" data-i18n="once">Once</option>
+                            <option value="daily" data-i18n="daily">Daily</option>
+                            <option value="weekly" data-i18n="weekly">Weekly</option>
+                            <option value="monthly" data-i18n="monthly">Monthly</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-reminder-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="save-reminder">Save Reminder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Schedule Bill Modal -->
+        <div id="schedule-bill-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="schedule-bill-modal-title" data-i18n="schedule-bill">Schedule Bill</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="scheduleBillForm">
+                    <input type="hidden" id="scheduleBillId">
+                    <div class="form-group">
+                        <label for="billClient" data-i18n="select-bill-client">Select Client for Bill</label>
+                        <select id="billClient" required>
+                            <option value="">Select a client</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billDate" data-i18n="bill-date">Send Date</label>
+                            <input type="date" id="billDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billTime">Send Time</label>
+                            <input type="time" id="billTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dueDate" data-i18n="due-date">Due Date</label>
+                        <input type="date" id="dueDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="billRepeat" data-i18n="repeat">Repeat</label>
+                        <select id="billRepeat" required>
+                            <option value="once" data-i18n="once">Once</option>
+                            <option value="daily" data-i18n="daily">Daily</option>
+                            <option value="weekly" data-i18n="weekly">Weekly</option>
+                            <option value="monthly" data-i18n="monthly">Monthly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="billNotes">Notes (Optional)</label>
+                        <textarea id="billNotes" placeholder="Add notes for the bill..." rows="3"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="cancel-schedule-bill-btn" data-i18n="cancel">Cancel</button>
+                        <button type="submit" class="btn btn-secondary" data-i18n="schedule">Schedule Bill</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- User Orders Modal -->
+        <div id="user-orders-modal" class="modal">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h3 id="user-orders-modal-title">User Orders</h3>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="user-orders-content">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Type</th>
+                                    <th>Quantity</th>
+                                    <th>Rate</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-orders-table-body">
+                                <!-- User orders will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="user-orders-total" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; text-align: right;">
+                        <strong>Total Value: <span id="user-orders-total">PKR 0.00</span></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notification Center -->
+        <div class="notification-center" id="notification-center">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notification-badge">0</span>
+            <div class="notification-dropdown">
+                <div class="notification-header">
+                    <h4>Notifications</h4>
+                    <button class="btn btn-sm btn-danger" id="clear-notifications">Clear All</button>
+                </div>
+                <div class="notification-list" id="notification-list">
+                    <!-- Notifications will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
